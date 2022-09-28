@@ -1,4 +1,4 @@
-name: snowflake-devops-dev
+name: snowflake-devops-dev_cdc
 
 # Controls when the action will run. 
 on:
