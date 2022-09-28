@@ -1,4 +1,4 @@
-name: snowflake-devops-dev
+name: snowflake-devops-dev_create_view
 
 # Controls when the action will run. 
 on:
