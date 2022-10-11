@@ -1,4 +1,4 @@
-name: snowflake-devops-dev_create_view
+name: snowflake-devops-dev_profitability_create_obj
 
 # Controls when the action will run. 
 on:
