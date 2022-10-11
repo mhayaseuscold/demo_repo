@@ -1,4 +1,4 @@
-name: snowflake-devops-dev_profitability_create_obj
+name: snowflake-devops-dev_prft_130_145_create_obj
 
 # Controls when the action will run. 
 on:
@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'CDW/TRANSFORM/profitability/create_objects/**/**'
+      - 'CDW/TRANSFORM/profitability/create_objects/PRFT_CUSTOMER_TOTAL_HOURS_130_145/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -41,4 +41,4 @@ jobs:
           pip install schemachange
           
           echo "Step 2: Running schemachange"
-          schemachange -f $GITHUB_WORKSPACE/CDW/TRANSFORM/profitability/create_objects/**/** -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SAVANNA.CHANGE_HISTORY --create-change-history-table
+          schemachange -f $GITHUB_WORKSPACE/CDW/TRANSFORM/profitability/create_objects/PRFT_CUSTOMER_TOTAL_HOURS_130_145/ -a $SF_ACCOUNT -u $SF_USERNAME -r $SF_ROLE -w $SF_WAREHOUSE -d $SF_DATABASE -c $SF_DATABASE.SAVANNA.CHANGE_HISTORY --create-change-history-table
