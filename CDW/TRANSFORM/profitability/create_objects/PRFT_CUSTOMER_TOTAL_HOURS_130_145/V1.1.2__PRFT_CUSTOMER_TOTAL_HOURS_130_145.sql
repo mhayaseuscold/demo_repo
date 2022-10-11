@@ -1,6 +1,4 @@
-USE SCHEMA TRANSFORM;
-
-Create or replace table PRFT_CUSTOMER_TOTAL_HOURS_130_145 as 
+Create or replace table CDW.TRANSFORM.PRFT_CUSTOMER_TOTAL_HOURS_130_145 as 
 select th.plant_id, customer_id, trim(user) user, qualifier_type, sum(actual_quantity) actual_quantity,
 to_char(lock_datetime, 'yyyy-mm-dd') task_date,
  sum(datediff(minutes, lock_datetime, quantity_datetime))/60 total_hours_cust
