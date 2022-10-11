@@ -1,18 +1,16 @@
-USE SCHEMA SAVANNA;
-
-create view V_SV_IMAGE_TASK_CASE_MATCH as
+create view CDW.SAVANNA.V_SV_IMAGE_TASK_CASE_MATCH as
 WITH CASE_MATCH AS
 (
 select image_id, monthname(created_date) month, year(created_date) year, created_date, 
 case when analysis_pallet_type <> 'WHITE'
-then count(analysis_pallet_type)/(select count(analysis_pallet_type) from SV_FACT_IMAGE_ANALYSIS_TASK where analysis_pallet_type <> 'WHITE' and created_date between '2022-08-28' and current_date ) * 100 
+then count(analysis_pallet_type)/(select count(analysis_pallet_type) from CDW.SAVANNA.SV_FACT_IMAGE_ANALYSIS_TASK where analysis_pallet_type <> 'WHITE' and created_date between '2022-08-28' and current_date ) * 100 
 else 0
 end as case_mismatch_pct,
 case when analysis_pallet_type = 'WHITE'
-then count(analysis_pallet_type)/(select count(analysis_pallet_type) from SV_FACT_IMAGE_ANALYSIS_TASK where analysis_pallet_type = 'WHITE' and created_date between '2022-08-28' and current_date ) * 100 
+then count(analysis_pallet_type)/(select count(analysis_pallet_type) from CDW.SAVANNA.SV_FACT_IMAGE_ANALYSIS_TASK where analysis_pallet_type = 'WHITE' and created_date between '2022-08-28' and current_date ) * 100 
 else 0
 end as case_match_pct
-from SV_FACT_IMAGE_ANALYSIS_TASK 
+from CDW.SAVANNA.SV_FACT_IMAGE_ANALYSIS_TASK 
 Where created_date between '2022-08-28' and current_date
 group by image_id, month, year, created_date, analysis_pallet_type
 ),
@@ -27,7 +25,7 @@ case when case_count_accepted = 1
 then count(case_count_accepted)/(select count(case_count_accepted) from SV_FACT_IMAGE_ANALYSIS_TASK where case_count_accepted = 1 and created_date between '2022-08-28' and current_date ) * 100 
 else 0
 end as case_count_match_pct
-from SV_FACT_IMAGE_ANALYSIS_TASK 
+from CDW.SAVANNA.SV_FACT_IMAGE_ANALYSIS_TASK 
 Where created_date between '2022-08-28' and current_date
 group by image_id, month, year, created_date, case_count_accepted
 ),
@@ -36,7 +34,7 @@ IMAGE_ANALYSIS AS
 select plant_id, image_id, created_date, monthname(created_date) month, year(created_date) year, container_id, lpn, notes, process_message, reviewed, status, case_count, analysis_case_count,
 case_count_accepted, pallet_type, analysis_pallet_type, pallet_type_accepted, layers, layers_confidence, cases_per_layer, cases_per_layer_confidence,
 pallet_type_confidence, top_type, response_date, customer, warehouse, source_system, 
-source_dbms, dl_ins_dt, dl_ins_usr, cdw_ins_dt, cdw_ins_usr, cdw_upd_dt, cdw_upd_usr from SV_FACT_IMAGE_ANALYSIS_TASK
+source_dbms, dl_ins_dt, dl_ins_usr, cdw_ins_dt, cdw_ins_usr, cdw_upd_dt, cdw_upd_usr from CDW.SAVANNA.SV_FACT_IMAGE_ANALYSIS_TASK
 where created_date between '2022-08-28' and current_date   
 )
 select it.plant_id, it.image_id, it.created_date, it.month, it.year, 
