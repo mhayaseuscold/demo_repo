@@ -56,7 +56,7 @@ sum(location_quantity) as Actual_Quantity,
 count(distinct LICENSE_ID) as Pallet_count,
 null as Total_Hours_Cust,
 null as Adj_Total_Hours_Cust
-from transform.facT_location_history
+from CDW.TRANSFORM.FACT_LOCATION_HISTORY
 where plant_ID in ('145')  and qualifier in('01') and last_maintenance_datetime between dateadd(year, -1, current_date) and current_date - 1
 and task_date between dateadd(year, -1, current_date) and dateadd(day, -1 , current_date)
 group by plant_ID, customer_Id, last_maintenance_program,qualifier,location_ID, date(LAST_MAINTENANCE_DATETIME)
